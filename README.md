@@ -19,3 +19,50 @@ Or just saved as a JSON-File ([functions_generated.json](functions_generated.jso
     - copy them into your map-project directory
     - OR copy them eg. to `C:\dev\battleforge_functions` and add that folder in the VSCode-extension-settings (`Lua.workspace.library`)\
       <img src="workspace_settings.PNG" width="400">
+
+### What is missing?
+- Currently, there is no export for
+    - Enums
+    - Events
+    - WarfarePatterns
+- Some functions still need to be compared to the decompiled scripts
+- Currently, most of the functions have not been verified yet. They may not be acurate!
+
+### Wiki-Template-Structure
+The data is saved in Mediawiki-Templates. `{{TemplateName}}` includes the Template TemplateName into the current page. Parameters can be added via the Pipe-Sign `{{TemplateName|Parameter1=xyz}}`. These parameters then can be accessed inside the template itself. 
+
+```powershell
+# This defines a Category. Every Function below this, will be added to the Category *CategoryName*
+{{GDSFunctionCategory|Name=CategoryName}}
+
+# Functions will be definded via GDSFunction.
+{{GDSFunction
+|Name=FunctionName
+|Desc=This is the description of Function FunctionName
+|Veri=false    # Has this Function been verified? 
+}}
+
+# If the function has parameters,
+# there needs to be a {{GDSFunctionParameterHeader}} at the start of the parameters
+# and {{GDSFunctionParameterFooter}} at the end of the parameters.
+# for every Parameter of the Function, a {{GDSFunctionParameter}}  is added.
+# If the function has no parameters, everything below can be left out.
+{{GDSFunctionParameterHeader}}  # Table-Header for Function-Table
+{{GDSFunctionParameter
+|Type=string
+|Name=Parameter1
+|Desc=This is the description of Parameter1
+}}
+{{GDSFunctionParameter
+|Type=string
+|Name=Parameter2
+|Desc=This is the description of Parameter2
+}}
+{{GDSFunctionParameterFooter}}  # Table-Footer for Function-Table
+```
+
+### How can I help?
+You can verify functions:\
+Are the Description, Parameters, Parameter-Descriptions, Optional-Flag correct?\
+If the are, please set the `Veri` Parameter of the `GDSFunction` Template to true.\
+If they are not, please correct them
