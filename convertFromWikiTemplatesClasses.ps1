@@ -34,7 +34,7 @@ class Function {
     [string]$Name
     [string]$NotN
     [string]$Desc
-    [boolean]$veri
+    [boolean]$Veri
     [System.Collections.ArrayList]$parameters = [System.Collections.ArrayList]::new()
 }
 
@@ -116,7 +116,20 @@ foreach ($psObjPage in $data.query.pages.PsObject.Properties) {
                 # There could be more than one =-sign -> new sub-array from index 1 to end of array, joined by =-sign
                 $val = ($keyValueSplit[1..$keyValueSplit.length] -join '=')
 
-                $tempObj.$param = $val
+                if($tempObj.$param -is [boolean])
+                {
+                    try {
+                      $tempObj.$param = [System.Convert]::ToBoolean($val) 
+                    } catch [FormatException] {
+                      $tempObj.$param = $false
+                    }
+                }
+                else 
+                {
+                    $tempObj.$param = $val
+                }
+
+                
             }
             
         }
@@ -147,7 +160,7 @@ $luaFunctionsStream = [System.IO.StreamWriter] $func_lua_path
 
 
 # Json-Output
-$functionTypes | ConvertTo-Json -Depth 5 | Out-File $func_json_path
+$functionTypes | ConvertTo-Json -Depth 7 | Out-File $func_json_path
 
 <#
 .SYNOPSIS
