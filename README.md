@@ -6,6 +6,7 @@ and converts it into Powershell Objects.
 
 Which then can be used for every future project, that wants to access the Documentation of Map-Script-Functions
 
+[convertFromWikiTemplatesClasses.ps1](convertFromWikiTemplatesClasses.ps1):\
 For example it can be used to generate the Function-Definitions that can be used by lua-language-server to display the intellisense for Map-Scripts ([functions_generated.lua](functions_generated.lua))
 
 Or just saved as a JSON-File ([functions_generated.json](functions_generated.json))
