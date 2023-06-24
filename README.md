@@ -21,7 +21,7 @@ Or just saved as a JSON-File ([functions_generated.json](functions_generated.jso
       <img src="workspace_settings.PNG" width="400">
 
 ### What is missing?
-- Currently, there is no export for
+- Currently, there is no export for (the data is instead provided via [static_functions_enums.lua](static_functions_enums.lua))
     - Enums
     - Events
     - WarfarePatterns
