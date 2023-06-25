@@ -18,7 +18,9 @@ Or just saved as a JSON-File ([functions_generated.json](functions_generated.jso
 - Make the functions ([functions_generated.lua](functions_generated.lua), [static_functions_enums.lua](static_functions_enums.lua)) accessible for [lua-language-server](https://github.com/LuaLS/lua-language-server)
     - copy them into your map-project directory
     - OR copy them eg. to `C:\dev\battleforge_functions` and add that folder in the VSCode-extension-settings (`Lua.workspace.library`)\
-      <img src="workspace_settings.PNG" width="400">
+      <img src="workspace_settings.PNG">
+- Disable diagnostic `newfield-call` (`Lua.diagnostics.disable`)\
+    <img src="newfield-call.PNG">
 
 ### What is missing?
 - Currently, there is no export for (the data is instead provided via [static_functions_enums.lua](static_functions_enums.lua))
