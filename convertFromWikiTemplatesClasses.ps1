@@ -1,6 +1,8 @@
 ﻿$func_lua_path = Join-Path -Path $PSScriptRoot -ChildPath "functions_generated.lua"
 $func_json_path = Join-Path -Path $PSScriptRoot -ChildPath "functions_generated.json"
 
+# Old URL, no longer needed, since we have everything in the "Full Reference"
+<#
 $uri = "https://skylords-reborn.fandom.com/"+
 "api.php"+
 "?action=query"+
@@ -11,6 +13,17 @@ $uri = "https://skylords-reborn.fandom.com/"+
 "&rvprop=content"+ # Gimme Content
 "&gcmlimit=max"+ 
 "&format=json"
+#>
+$uri = "https://skylords-reborn.fandom.com/"+
+"api.php"+
+"?action=query"+
+"&prop=revisions"+
+"&rvslots=main"+
+"&rvprop=content"+
+"&gcmlimit=max"+
+"&format=json"+
+"&titles=Script%20Information%20-%20Full%20Reference"
+
 
 $webData = Invoke-WebRequest -Uri $uri
 $data = ConvertFrom-Json $webData.content
@@ -34,6 +47,7 @@ class Function {
     [string]$Name
     [string]$NotN
     [string]$Desc
+    [string]$Sample
     [boolean]$Veri
     [System.Collections.ArrayList]$parameters = [System.Collections.ArrayList]::new()
 }
@@ -88,7 +102,7 @@ foreach ($psObjPage in $data.query.pages.PsObject.Properties) {
         # Initialize temporary variables, once a new template is recognized
         switch($templateName)
         {
-            "Function"          { $tempFunction = [Function]::new() }
+            "FunctionHEAD"          { $tempFunction = [Function]::new() }
             "FunctionParameter" { $tempFunctionParameter = [FunctionParameter]::new() }
             "FunctionCategory"  { $tempFunctionCategory = [FunctionCategory]::new() }
         }
@@ -106,7 +120,7 @@ foreach ($psObjPage in $data.query.pages.PsObject.Properties) {
                 $tempObj = $null
                 switch($templateName)
                 {
-                    "Function"          { $tempObj = $tempFunction }
+                    "FunctionHEAD"          { $tempObj = $tempFunction }
                     "FunctionParameter" { $tempObj = $tempFunctionParameter }
                     "FunctionCategory"  { $tempObj = $tempFunctionCategory }
                 }
@@ -137,7 +151,7 @@ foreach ($psObjPage in $data.query.pages.PsObject.Properties) {
         # Add $temp.. objects to structure
         switch($templateName)
         {
-            "Function"          { $h = $tempFunctionCategory.functions.Add($tempFunction) }
+            "FunctionHEAD"          { $h = $tempFunctionCategory.functions.Add($tempFunction) }
             "FunctionParameter" { $h = $tempFunction.parameters.Add($tempFunctionParameter) }
             "FunctionCategory"  { $h = $tempFunctionType.categories.Add($tempFunctionCategory) }
         }        
@@ -254,6 +268,7 @@ function printLuaFunction($name, $desc, $parameters, $isFunc)
         
             if($par.Optional) {
                 $optional = "(Optional) "
+                $oquestion = "?"
             }
 
             # convert parameter-type to usable type
@@ -263,8 +278,9 @@ function printLuaFunction($name, $desc, $parameters, $isFunc)
                 $parType = "any"
             }
                 
-            $luaFunctionsStream.WriteLine("---@field $($par.Name) $parType $optional$($par.desc)")
+            $luaFunctionsStream.WriteLine("---@field $($par.Name)$oquestion $parType $optional$($par.desc)")
             $optional = $null
+            $oquestion = ""
         }
 
         $luaFunctionsStream.WriteLine("")
