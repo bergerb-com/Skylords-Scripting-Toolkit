@@ -37,8 +37,8 @@ The data is saved in Mediawiki-Templates. `{{TemplateName}}` includes the Templa
 # This defines a Category. Every Function below this, will be added to the Category *CategoryName*
 {{GDSFunctionCategory|Name=CategoryName}}
 
-# Functions will be definded via GDSFunction.
-{{GDSFunction
+# Functions will be definded via GDSFunctionHEAD.
+{{GDSFunctionHEAD
 |Name=FunctionName
 |Desc=This is the description of Function FunctionName
 |Veri=false    # Has this Function been verified? 
