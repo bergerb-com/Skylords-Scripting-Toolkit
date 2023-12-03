@@ -75,3 +75,6 @@ You can verify and correct functions:\
 Are the Description, Parameters, Parameter-Descriptions, Optional-Flag correct?\
 If the are, please set the `Veri` Parameter of the `GDSFunction` Template to true.\
 If they are not, please correct them
+
+### Disclosure
+EA has not endorsed and does not support this product.
