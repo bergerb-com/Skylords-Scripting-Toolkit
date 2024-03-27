@@ -1,3 +1,5 @@
+$host.UI.RawUI.WindowTitle = "Skylords Reborn Log Display"
+
 Add-Type -AssemblyName Microsoft.VisualBasic
 
 $doc = [Environment]::GetFolderPath("MyDocuments")

@@ -34,6 +34,10 @@ else
 {
     Write-Host "Git found!"
 
+    # Overwrite generated files, since they may have been changed
+    & "$installPath\cmd\git.exe" checkout LuaDocConverter\functions_generated.lua
+    & "$installPath\cmd\git.exe" checkout LuaDocConverter\functions_generated.json
+
     # git pull to update repository
     & "$installPath\cmd\git.exe" pull
 }
@@ -42,7 +46,7 @@ Write-Host
 Write-Host "2. Running the LuaDocConverter..."
 
 # Run the LuaDocConverter Script
-.\convertFromWikiTemplatesClasses.ps1
+LuaDocConverter\convertFromWikiTemplatesClasses.ps1
 
 Write-Host "Done."
 Write-Host
