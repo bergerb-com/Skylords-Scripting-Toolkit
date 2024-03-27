@@ -49,6 +49,7 @@ class Function {
     [string]$Desc
     [string]$Sample
     [boolean]$Veri
+    [string]$CreationDate
     [System.Collections.ArrayList]$parameters = [System.Collections.ArrayList]::new()
 }
 
@@ -58,6 +59,8 @@ class FunctionParameter {
     [string]$Name
     [string]$Desc
     [boolean]$Optional
+    [string]$Prefix
+    [string]$Default
 }
 
 ####
@@ -205,7 +208,7 @@ function printLuaFunction($name, $desc, $parameters, $isFunc)
     }
     
     # Definition of what types can be passed from the Wiki-Templates. 
-    $validTypes = "nil","any","boolean","string","number","integer","function","table","thread","userdata","lightuserdata"
+    $validTypes = "nil","any","boolean","string","number","integer","function","table","thread","userdata","lightuserdata","function[]"
 
     # Normal Function-Body
     <#
@@ -223,7 +226,12 @@ function printLuaFunction($name, $desc, $parameters, $isFunc)
         foreach($par in $parameters) {
         
             if($par.Optional) {
-                $optional = "(Optional) "
+                $optional = "<br/>*Optional, Default=$($par.Default)*"
+            }
+            
+            $prefix = ""
+            if($par.prefix) {
+                $prefix = "**Prefix:** ``$($par.prefix)``<br/>"
             }
             
             # convert parameter-type to usable type
@@ -233,7 +241,7 @@ function printLuaFunction($name, $desc, $parameters, $isFunc)
                 $parType = "any"
             }
                 
-            $luaFunctionsStream.WriteLine("---@param $($par.Name) $parType $optional$($par.desc)")
+            $luaFunctionsStream.WriteLine("---@param $($par.Name) $parType $prefix$($par.desc)$optional")
             $optional = $null
         }
         
@@ -267,8 +275,13 @@ function printLuaFunction($name, $desc, $parameters, $isFunc)
         foreach($par in $parameters) {
         
             if($par.Optional) {
-                $optional = "(Optional) "
+                $optional = "<br/>*Optional, Default=$($par.Default)*"
                 $oquestion = "?"
+            }
+            
+            $prefix = ""
+            if($par.prefix) {
+                $prefix = "**Prefix:** ``$($par.prefix)``<br/>"
             }
 
             # convert parameter-type to usable type
@@ -278,7 +291,7 @@ function printLuaFunction($name, $desc, $parameters, $isFunc)
                 $parType = "any"
             }
                 
-            $luaFunctionsStream.WriteLine("---@field $($par.Name)$oquestion $parType $optional$($par.desc)")
+            $luaFunctionsStream.WriteLine("---@field $($par.Name)$oquestion $parType $prefix$($par.desc)$optional")
             $optional = $null
             $oquestion = ""
         }
@@ -325,11 +338,19 @@ foreach($functionType in $functionTypes) {
 
         foreach($function in $cat.functions) {
 
-            printLuaFunction -name $function.Name -desc $function.Desc -parameters $function.parameters -isFunc ($cat.Name -eq "!Functions")
+            printLuaFunction `
+                -name $function.Name `
+                -desc "$($function.CreationDate) $($function.Desc)" `
+                -parameters $function.parameters `
+                -isFunc ($cat.Name -eq "!Functions")
 
             if($function.NotN)
             {
-                printLuaFunction -name $function.NotN -desc $function.Desc -parameters $function.parameters -isFunc ($cat.Name -eq "!Functions")
+                printLuaFunction `
+                    -name $function.NotN `
+                    -desc "$($function.CreationDate) $($function.Desc)" `
+                    -parameters $function.parameters `
+                    -isFunc ($cat.Name -eq "!Functions")
             }
             
         }

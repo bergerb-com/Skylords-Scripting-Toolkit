@@ -1,15 +1,61 @@
-### What is this?
-This is a tool made for SkylordsReborn.
-It takes the Wiki-Templates of [Script Information - Full Reference](
-https://skylords-reborn.fandom.com/wiki/Script_Information_-_Full_Reference)
-and converts it into Powershell Objects.
+This is a collection of useful tools for Skylords-Reborn Map-Scripting
 
-Which then can be used for every future project, that wants to access the Documentation of Map-Script-Functions
+## update.cmd
+Prerequesites:
+- Git installed (https://git-scm.com/downloads)
+
+This is the Update-Script for this Repository.
+It tries to run `git pull` to grab the latest version.
+It also executes the LuaDocConverter.
+
+Please be aware of Execution Policies. By default your computer will not run Powershell-Scripts downloaded from the internet.
+Further explanation is inside the `update.cmd` file.
+
+`functions_generated.lua` will not be updated with every change made to the wiki, so if you want the latest docs, I recommend to run the LuaDocConverter aswell.
+
+But if you dont want to run the conversion-script, you are welcome to remove the following line from the `update.ps1`-script:
+```powershell
+# Run the LuaDocConverter Script
+.\convertFromWikiTemplatesClasses.ps1
+```
+
+## LogDisplay
+This Script allows you to display Log-Messages via MessageBox or Console.
+It continously watches the `_log_proxy_latest.log`-File and reacts to log Entries, that were logged with the `Log`-Script-Function.
+This allows for debug messages, that will not get blocked by the Outcry-Queue
+
+If you want the MessageBoxes to work, unfortunately you have to play in Windowed-Mode. Otherwise the Game will not allow MessageBoxes to appear on top of the Game.
+
+Another Solution would be a second monitor.
+
+## OpenScriptTag
+Prerequesites:
+- AutoHotKey V2 installed
+- "Entity List" - Window open (needs to be pulled out of the editor - needs to be a seperate window)
+- Keyboard Focus inside Tag-TextBox
+- Tag selected in Name/Tag/DB ID Dropdown
+- List sorted by Tag-Column (to only show relevant entries)
+
+This Script opens Script Tags inside the Map-Editor. You just need to highlight the Script-Tag that you want to find.
+
+This works for every Text-Editor!
+
+## LuaDocConverter
+This Script takes the Wiki-Templates of [Script Information - Full Reference](
+https://skylords-reborn.fandom.com/wiki/Script_Information_-_Full_Reference)
+and converts it into Lua Documentation.
+
+This allows for eg. Autocompletion, Type-Checking, hover to view details of parameters, ...
+
+This tool can also be used for every future project, that wants to access the Documentation of Map-Script-Functions
 
 [convertFromWikiTemplatesClasses.ps1](convertFromWikiTemplatesClasses.ps1):\
-For example it can be used to generate the Function-Definitions that can be used by lua-language-server to display the intellisense for Map-Scripts ([functions_generated.lua](functions_generated.lua))
+is used to generate the Lua-Documentation ([functions_generated.lua](functions_generated.lua))
+which is then used by the lua-language-server.
 
-Or just saved as a JSON-File ([functions_generated.json](functions_generated.json))
+This script is automatically executed, if you execute `update.cmd`
+
+it also generates [functions_generated.json](functions_generated.json)
 
 ### How to use?
 - Install Visual Studio Code
@@ -23,11 +69,7 @@ Or just saved as a JSON-File ([functions_generated.json](functions_generated.jso
     <img src="img/newfield-call.PNG">
 
 ### What is missing?
-- Currently, there is no export for (the data is instead provided via [static_functions_enums.lua](static_functions_enums.lua))
-    - Enums
-    - Events
-    - WarfarePatterns
-- Some functions still need to be compared to the decompiled scripts
+- Currently, there is no export for Enums (the data is instead provided via [static_functions_enums.lua](static_functions_enums.lua))
 - Currently, most of the functions have not been verified yet. They may not be acurate!
 
 ### Wiki-Template-Structure
@@ -42,6 +84,7 @@ The data is saved in Mediawiki-Templates. `{{TemplateName}}` includes the Templa
 |Name=FunctionName
 |Desc=This is the description of Function FunctionName
 |Veri=false    # Has this Function been verified? 
+|CreationDate=2008-11-12
 |Sample=
 OnOneTimeEvent
 {
@@ -62,11 +105,15 @@ OnOneTimeEvent
 |Type=string
 |Name=Parameter1
 |Desc=This is the description of Parameter1
+|Prefix=pl_
+|Default=1
 }}
 {{GDSFunctionParameter
 |Type=string
 |Name=Parameter2
 |Desc=This is the description of Parameter2
+|Prefix=pl_
+|Default=1
 }}
 ```
 
