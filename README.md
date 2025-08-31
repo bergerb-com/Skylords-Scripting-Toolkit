@@ -41,8 +41,7 @@ This Script opens Script Tags inside the Map-Editor. You just need to highlight 
 This works for every Text-Editor!
 
 ## LuaDocConverter
-This Script takes the Wiki-Templates of [Script Information - Full Reference](
-https://skylords-reborn.fandom.com/wiki/Script_Information_-_Full_Reference)
+This Script takes the Wiki-Templates of [Script Documentation](https://skylords-reborn.fandom.com/wiki/Script_Documentation)
 and converts it into Lua Documentation.
 
 This allows for eg. Autocompletion, Type-Checking, hover to view details of parameters, ...
