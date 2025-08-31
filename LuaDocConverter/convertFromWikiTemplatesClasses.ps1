@@ -22,7 +22,7 @@ $uri = "https://skylords-reborn.fandom.com/"+
 "&rvprop=content"+
 "&gcmlimit=max"+
 "&format=json"+
-"&titles=Script%20Information%20-%20Full%20Reference"
+"&titles=Script_Documentation"
 
 
 $webData = Invoke-WebRequest -Uri $uri
