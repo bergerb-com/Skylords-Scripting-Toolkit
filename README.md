@@ -1,4 +1,5 @@
-This is a collection of useful tools for Skylords-Reborn Map-Scripting
+This is a collection of useful tools for Skylords-Reborn Map-Scripting\
+Video Showcase and Tutorial: https://youtu.be/PnUCPb_BWuk
 
 ## update.cmd
 Prerequesites:
