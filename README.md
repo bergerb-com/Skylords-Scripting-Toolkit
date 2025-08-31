@@ -59,9 +59,9 @@ it also generates [functions_generated.json](functions_generated.json)
 ### How to use?
 - Install Visual Studio Code
 - Install the [lua-language-server](https://github.com/LuaLS/lua-language-server) extension (can be installed from within Visual Studio Code) 
-- If you want the latest functions_generated.lua directly sucked out of the wiki, run `convertFromWikiTemplatesClasses.ps1`
+- If you want the latest functions_generated.lua directly sucked out of the wiki, run `convertFromWikiTemplatesClasses.ps1` (by default, update.cmd does this by itself)
 - Make the functions ([functions_generated.lua](functions_generated.lua), [static_functions_enums.lua](static_functions_enums.lua)) accessible for [lua-language-server](https://github.com/LuaLS/lua-language-server)
-    - copy them into your map-project directory
+    - copy them into your map-project directory (not recommended)
     - OR copy them eg. to `C:\dev\battleforge_functions` and add that folder in the VSCode-extension-settings (`Lua.workspace.library`)\
       <img src="img/workspace_settings.PNG">
 - Disable diagnostic `newfield-call` (`Lua.diagnostics.disable`)\
